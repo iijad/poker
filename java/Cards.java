@@ -1,10 +1,14 @@
-public class Cards {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+//if things get hariy, change both types to strings
+ class Cards {
 	
-	private char rank;
+	private String rank;
 	private char suit;
 	
 	//creating the constructor for the card class. Using this to eliminate confusion between the variables
-	public Cards(char rank, char suit) {
+	public Cards(String rank, char suit) {
 		this.rank = rank;
 		this.suit = suit;
 		
@@ -12,7 +16,7 @@ public class Cards {
 	}
 	
 	//returns the rank of the card
-		public char getRank() {
+		public String getRank() {
 			return rank;
 		}
 	
@@ -31,8 +35,51 @@ public class Cards {
 		
 	}
 	
-	
-	//try method that uses 4 loops to populate the array that will be the card deck
+
+ 
+
 
 }
+	//creating a class for making a deck
+	class Deck {
+   //creating a private final variable since the deck will never change
+   private final List<Cards> cards;
+   
+   public Deck() {
+   cards = new ArrayList<>();
+   char[] suits = { 'S' , 'H' , 'D', 'C'};
+   String [] ranks = { "2", "3", "4", "5" , "6", "7", "8", "9", "10" , "J", "Q", "K", "A"};
+   
+   for (char suit: suits) {
+     for (String rank: ranks){
+       cards.add(new Cards(rank, suit));
+       }
+     }
+   
+   
+   }
+ //shuffles the deck
+  public void shuffle(){
+    Collections.shuffle(cards);
+  
+  } 
+  //migbt have to come back to this method to deal the cards in the order that is asked
+  public Cards dealingCards(){
+    if (!cards.isEmpty())
+    {
+      return cards.remove(0);
+    }
+    return null;
+  }
+  
+  //retruns the size of the deck
+  public int size(){
+    return cards.size();
+  
+  }
+  
+  
+   
+ 
+ }
 
