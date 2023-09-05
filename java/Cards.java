@@ -37,7 +37,7 @@ import java.util.List;
 	
 
  
-
+/////DECK CLASS///////////////////////////////////////////////////////////////////////////
 
 }
 	//creating a class for making a deck
@@ -63,7 +63,7 @@ import java.util.List;
     Collections.shuffle(cards);
   
   } 
-  //migbt have to come back to this method to deal the cards in the order that is asked
+  //might have to come back to this method to deal the cards in the order that is asked
   public Cards dealingCards(){
     if (!cards.isEmpty())
     {
@@ -78,8 +78,103 @@ import java.util.List;
   
   }
   
+  public void printDeck(){
+  int count = 0;
   
+  for (Cards card: cards) {
+    System.out.print(card.toString() + "\t");
+    count++;
+    if (count % 13 ==0) {
+        System.out.println();
+    }
+  }
+ }
+  
+ }
+ 
+ 
+   //creating the class for making a hand//////////////////////////////////////////////////////////////
    
+ class Hand {
+   private final List<Cards> cards;
+   
+   public Hand() {
+     cards = new ArrayList<>();
+     
+   }
+   
+   public void addCard (Cards card) {
+     cards.add(card);
+   
+   }
+   
+   public List<Cards> getCards() {
+     return cards;
+     
+   }
+   
+   //Maybe quarentine
+   public void printHand(){
+       int count = 0;
+       for (Cards newCard: cards){
+           System.out.print(newCard.toString() + "\t");
+           count++;
+           if (count % 5 == 0){
+               System.out.println();
+           }
+       }
+   }
+               
+   
+   @Override 
+   public String toString() {
+   // StringBuilder It constructs a blank string builder with a capacity of 16 characters. Will come back to add the Rank of the hand
+   
+     StringBuilder handString = new StringBuilder();
+     int count = 0;
+     for (Cards card : cards) {
+       handString.append(card.toString()).append("\t");
+       count++;
+       if (count % 5 == 0){
+         System.out.println();
+       }
+     }
+   return handString.toString();
+ }
  
  }
+   
+
+   //PLAYER CLASS////////////////////////////////////////////////////////////////////
+   
+ class Player {
+   private final String name ;
+   private final Hand hand;
+   
+ 
+   public Player (String name) {
+     this.name = name;
+     this.hand = new Hand();
+     
+   }
+   
+   public void addingToHand(Cards newCard)
+   {
+     hand.addCard(newCard);
+   }
+   
+   public Hand gethand(){
+     return hand;
+   }
+   
+   @Override
+   public String toString() {
+     return name + " Hand: \n" + hand.toString();
+     
+   }
+ }
+
+   
+   
+ 
 
