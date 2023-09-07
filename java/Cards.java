@@ -89,6 +89,14 @@ import java.util.List;
     }
   }
  }
+ 
+ public void printRemainingDeck(){
+   System.out.println();
+   System.out.println("Remaining Cards in Deck: " + "\t"); 
+   for (Cards card: cards) {
+     System.out.print(card.toString() + "\t");
+     }
+   }
   
  }
  
