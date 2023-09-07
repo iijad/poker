@@ -53,6 +53,8 @@ public class PokergameTest {
     for (Player player: players) {
       System.out.print(player);
     }
+    
+   deck.printRemainingDeck();
 	}
 
 }
