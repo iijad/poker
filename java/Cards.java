@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 //if things get hariy, change both types to strings
  class Cards {
 	
@@ -136,7 +138,7 @@ import java.util.List;
    
    @Override 
    public String toString() {
-   // StringBuilder It constructs a blank string builder with a capacity of 16 characters. Will come back to add the Rank of the hand
+   // StringBuilder It constructs a blank string builder with a capacity of 16 characters. 
    
      StringBuilder handString = new StringBuilder();
      int count = 0;
@@ -149,6 +151,24 @@ import java.util.List;
      }
    return handString.toString();
  }
+ 
+   public String rankHand() {
+     //Creating a hash map to rank them hands
+     Map<String,Integer> rankCounts = new HashMap<>();
+     for (Cards newCard: cards) {
+       String rank = newCard.getRank();
+       rankCounts.put(rank, rankCounts.getOrDefault(rank, 0) + 1);
+     }
+     
+     if (rankCounts.containsValue(4)) {
+       return "Four of a Kind" ;
+     }
+     else if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
+       return "Full House" ;
+     }
+     
+     List<String> rankOfHand = new ArrayList<>();
+     return "String";
  
  }
    
@@ -180,6 +200,21 @@ import java.util.List;
      return name + " Hand: \n" + hand.toString();
      
    }
+ }
+ 
+
+   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  }
 
    
