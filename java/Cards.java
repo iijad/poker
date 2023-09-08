@@ -167,9 +167,47 @@ import java.util.Map;
        return "Full House" ;
      }
      
-     List<String> rankOfHand = new ArrayList<>();
-     return "String";
+     List<String> rankOfHand = new ArrayList<>(rankCounts.keySet());
+     Collections.sort(rankOfHand);
+     
+     boolean isFlush = isFlush();
+     boolean isStraight = isStraight(rankOfHand);
+     
+     if (isFlush && isStraight) {
+       return "Straight Flush" ; 
+     } else if (isFlush) {
+       return "Flush";
+     } else if (isStraight) {
+       return "Straight";
+     } else if (rankCounts.containsValue(3)) {
+       return "Three of a Kind"; 
+     } else if (rankCounts.containsValue(2)) { 
+       int pairCount = 0;
+       for (int count : rankCounts.values()) {
+         if (count == 2) {
+           pairCount++;
+         }
+       }
+       if (pairCount == 2) { 
+         return "Two Pair";
+       } else {
+           return "Pair";
+       }
+     } else {
+         return "High Card";
+     }
+
+  
  
+ }
+ 
+ private boolean isFlush() {
+ 
+ return false;
+ }
+ private boolean isStraight(List<String> ranks) {
+ 
+ return false;
  }
    
 
