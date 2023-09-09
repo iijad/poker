@@ -202,10 +202,23 @@ import java.util.Map;
  }
  
  private boolean isFlush() {
+  /* char suit = cards.get(0).getSuit();
+   for (Cards newCard : cards) {
+       if (newCard.getSuit().charAt(0) != suit.charAt(0)) {
+           return false; 
+       }
+   }*/
  
- return false;
+   return true;
  }
+ 
+ 
  private boolean isStraight(List<String> ranks) {
+  /* for (int i = 0; i < ranks.size() - 1; i++) {
+       if (Cards.getRank(ranks.get(i + 1)) - Cards.getRank(ranks.get(i)) != 1) {
+           return false;
+       }
+   }*/
  
  return false;
  }
