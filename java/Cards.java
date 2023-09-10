@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 //if things get hariy, change both types to strings
  class Cards {
 	
@@ -36,12 +37,30 @@ import java.util.Map;
 		return rank +""+ suit;
 		
 	}
+ 
+ public static int getRankValue(String rank){
+   switch(rank) {
+       case "2": return 2;
+       case "3": return 3;
+       case "4": return 4;
+       case "5": return 5;
+       case "6": return 6;
+       case "7": return 7;
+       case "8": return 8;
+       case "9": return 9;
+       case "10": return 10;
+       case "J": return 11;
+       case "Q": return 12;
+       case "K": return 13;
+       case "A": return 14;
+       default: return -1;
+   }
+ }
 	
 
- 
-/////DECK CLASS///////////////////////////////////////////////////////////////////////////
 
 }
+/////DECK CLASS///////////////////////////////////////////////////////////////////////////
 	//creating a class for making a deck
 	class Deck {
    //creating a private final variable since the deck will never change
@@ -153,74 +172,93 @@ import java.util.Map;
  }
  
    public String rankHand() {
-     //Creating a hash map to rank them hands
-     Map<String,Integer> rankCounts = new HashMap<>();
+     //Creating a hash map to rank them hands, come back for formatting
+     Map<Character, Integer> suitCounts = new HashMap<>(); //for the suits
+     Map<String, Integer> rankCounts = new HashMap<>();  //for the ranks
      for (Cards newCard: cards) {
+       char suit = newCard.getSuit();
        String rank = newCard.getRank();
+       suitCounts.put(suit, suitCounts.getOrDefault(suit, 0) + 1);
        rankCounts.put(rank, rankCounts.getOrDefault(rank, 0) + 1);
      }
      
-     if (rankCounts.containsValue(4)) {
-       return "Four of a Kind" ;
-     }
-     else if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
-       return "Full House" ;
-     }
-     
-     List<String> rankOfHand = new ArrayList<>(rankCounts.keySet());
-     Collections.sort(rankOfHand);
-     
-     boolean isFlush = isFlush();
-     boolean isStraight = isStraight(rankOfHand);
-     
-     if (isFlush && isStraight) {
-       return "Straight Flush" ; 
-     } else if (isFlush) {
+     if (suitCounts.size() == 1 &&  rankCounts.size() == 5) {
+         if (isStraight(rankCounts.keySet())) {
+         return "Straight Flush";
+       }
        return "Flush";
-     } else if (isStraight) {
-       return "Straight";
-     } else if (rankCounts.containsValue(3)) {
-       return "Three of a Kind"; 
-     } else if (rankCounts.containsValue(2)) { 
-       int pairCount = 0;
-       for (int count : rankCounts.values()) {
-         if (count == 2) {
-           pairCount++;
-         }
-       }
-       if (pairCount == 2) { 
-         return "Two Pair";
-       } else {
-           return "Pair";
-       }
-     } else {
-         return "High Card";
      }
-
-  
+     
+     if (rankCounts.size() == 5 && isStraight(rankCounts.keySet())) {
+       return "Straight" ;
+     }
+     
+     if (rankCounts.containsValue(4)) {
+         return "Four of a Kind"; //4 of each number (A, 2, 3....)
+     }
+     
+     if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
+         return "Full House"; 
+     }
+     
+     if (rankCounts.containsValue(2)) { // for getting pairs
+         int pairCount = 0;
+         for (int newCount : rankCounts.values()) {
+             if (newCount == 2) {
+                 pairCount++;
+             }
+         }
+         if (pairCount == 2) {
+             return "Two Pair";
+         } else {
+             return "Pair";
+         }
+     }
+     
+     return "High Card";
+   }
+         
+     
+   
  
- }
  
- private boolean isFlush() {
-  /* char suit = cards.get(0).getSuit();
+ 
+ 
+ /*private boolean isFlush() {
+    char suit = cards.get(0).getSuit();
    for (Cards newCard : cards) {
-       if (newCard.getSuit().charAt(0) != suit.charAt(0)) {
+       if (newCard.getSuit().charAt(1) != suit.charAt(0)) {
            return false; 
        }
-   }*/
+   }
  
    return true;
- }
+ } */
  
  
- private boolean isStraight(List<String> ranks) {
-  /* for (int i = 0; i < ranks.size() - 1; i++) {
-       if (Cards.getRank(ranks.get(i + 1)) - Cards.getRank(ranks.get(i)) != 1) {
-           return false;
-       }
-   }*/
- 
- return false;
+ private boolean isStraight(Set<String> ranks) {
+     List<Integer> rankValues = new ArrayList<>();
+     for (String newRank : ranks) {
+         rankValues.add(Cards.getRankValue(newRank));
+     }
+     
+     Collections.sort(rankValues);
+     
+     int min = rankValues.get(0);
+     int max = rankValues.get(rankValues.size() - 1);
+     
+     if (max - min == 4 && ranks.size() == 5) {
+         return true;
+     }
+     
+     //check for an Ace low straight (A, 2, 3, 4, 5)
+     if (ranks.contains("A") && ranks.contains("2") && ranks.contains("3") && ranks.contains("4") && ranks.contains("5")) {
+         return true;
+     }
+     
+     
+     return false;
+
  }
    
 
