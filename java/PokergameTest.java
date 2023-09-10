@@ -11,6 +11,7 @@ public class PokergameTest {
    
    int numPlayers = 5;
    int cardsPerHand = 5;
+   Hand newHand = new Hand();
    deck.printDeck();
    
   /* for (int i=0; i < 5; i++)
