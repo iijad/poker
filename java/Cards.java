@@ -122,7 +122,7 @@ import java.util.Set;
  }
  
  
-   //creating the class for making a hand//////////////////////////////////////////////////////////////
+   //creating the class for making a HAND//////////////////////////////////////////////////////////////
    
  class Hand {
    private final List<Cards> cards;
@@ -220,7 +220,21 @@ import java.util.Set;
          
      
    
- 
+ public char getFlushSuit() {
+     Map<Character, Integer> suitCounts = new HashMap<>();
+     for (Cards newCard : cards) {
+         char newSuit = newCard.getSuit();
+         suitCounts.put(newSuit, suitCounts.getOrDefault(newSuit, 0) + 1);
+     }
+     
+     for (char newSuit : suitCounts.keySet()) {
+         if (suitCounts.get(newSuit) >= 5) {
+             return newSuit;
+         }
+     }
+     
+     return ' ' ; // there is No flush ani
+ }
  
  
  
@@ -297,6 +311,39 @@ import java.util.Set;
      return name;
      
    }
+ }
+ 
+ class PlayerRank {
+   private final Player player;
+   private final String rank;
+   private final char suit; //used for tiebreakers
+   
+   public PlayerRank(Player player, String rank, char suit) {
+         this.player = player;
+         this.rank = rank;
+         this.suit = suit;
+   }
+   
+   public Player getPlayer() {
+       return player;
+   }
+   
+   public String getRank() {
+       return rank;
+   }
+   
+   public char getSuit() {
+       return suit;
+   }
+
+   
+   
+ 
+ 
+ 
+ 
+ 
+ 
  }
  
  
