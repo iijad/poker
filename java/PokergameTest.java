@@ -51,11 +51,14 @@ public class PokergameTest {
    }
    
    //printing out each hand
-    for (Player player: players) {
-      System.out.print(player);
+    for (Player newPlayer : players) {
+        System.out.println(newPlayer.getName() + " 's Hand: ");
+        newPlayer.getHand().printHand();
+        String handRank = newPlayer.getHand().rankHand();
+        System.out.println(" - " + handRank);
+        System.out.println();
     }
-    
-   deck.printRemainingDeck();
+
 	}
 
 }
