@@ -142,7 +142,7 @@ import java.util.Set;
      
    }
    
-   //Maybe quarentine
+   //printing out the hands
    public void printHand(){
        int count = 0;
        for (Cards newCard: cards){
@@ -259,13 +259,16 @@ import java.util.Set;
      
      return false;
 
+
+   }
  }
+
    
 
    //PLAYER CLASS////////////////////////////////////////////////////////////////////
    
- class Player {
-   private final String name ;
+  class Player {
+   private final String name;
    private final Hand hand;
    
  
@@ -280,16 +283,22 @@ import java.util.Set;
      hand.addCard(newCard);
    }
    
-   public Hand gethand(){
+   public String getName() {
+       return name;
+   }
+   
+   public Hand getHand(){
      return hand;
    }
    
    @Override
    public String toString() {
-     return name + " Hand: \n" + hand.toString();
+     //return name + " Hand: \n" + hand.toString();
+     return name;
      
    }
  }
+ 
  
 
    
@@ -304,7 +313,7 @@ import java.util.Set;
  
  
  
- }
+ 
 
    
    
