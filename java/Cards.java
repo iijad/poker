@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.HashMap;
@@ -191,6 +192,14 @@ import java.util.Set;
        rankCounts.put(rank, rankCounts.getOrDefault(rank, 0) + 1);
      }
      
+     if (suitCounts.size() == 1 && rankCounts.size() == 5) {
+         if (isRoyalStraightFlush(rankCounts.keySet(), suitCounts.keySet().iterator().next())) {
+             return "Royal Straight Flush";
+         }
+         
+         return "Straight Flush";
+     }
+     
      if (suitCounts.size() == 1 &&  rankCounts.size() == 5) {
          if (isStraight(rankCounts.keySet())) {
          return "Straight Flush";
@@ -198,22 +207,24 @@ import java.util.Set;
        return "Flush";
      }
      
-     if (rankCounts.size() == 5 && isStraight(rankCounts.keySet())) {
-       return "Straight" ;
-     }
-     
      if (rankCounts.containsValue(4)) {
          return "Four of a Kind"; //4 of each number (A, 2, 3....)
-     }
-     
-     if (rankCounts.containsValue(3)) {
-         return "Three of a Kind"; // 3 of each number
      }
      
      if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
          return "Full House"; 
      }
      
+     if (rankCounts.size() == 5 && isStraight(rankCounts.keySet())) {
+       return "Straight" ;
+     }
+     
+     
+     if (rankCounts.containsValue(3)) {
+         return "Three of a Kind"; // 3 of each number
+     }
+     
+ 
      if (rankCounts.containsValue(2)) { // for getting pairs
          int pairCount = 0;
          for (int newCount : rankCounts.values()) {
@@ -261,6 +272,13 @@ import java.util.Set;
  
    return true;
  } */
+ 
+ 
+ private boolean isRoyalStraightFlush(Set<String> ranks, char suit) {
+     //checking for the sequence of 10, J, Q, K, A
+     
+     return ranks.containsAll(Arrays.asList("10", "J", "Q", "K", "A"));
+ }
  
  
  private boolean isStraight(Set<String> ranks) {
