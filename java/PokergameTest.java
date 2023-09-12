@@ -36,6 +36,9 @@ public class PokergameTest {
      {
        players.add(new Player("Player " + i));
      }
+     
+   //making a list to store objects of the class PlayerRank
+   List<PlayerRank> playerRanks = new ArrayList<>();
    
    for (int i=0; i < cardsPerHand; i++) {
        for (Player player: players) {
@@ -51,13 +54,18 @@ public class PokergameTest {
    
    }
    
-   //making a list to store objects of the class PlayerRank
-   List<PlayerRank> playerRanks = new ArrayList<>();
+ 
    
    //Calculating and storing ranks for each players hand
    for (Player newPlayer : players) {
+       System.out.println(newPlayer.getName() + " 's Hand:");
+       newPlayer.getHand().printHand();
        String handRanks = newPlayer.getHand().rankHand();
        char flushSuit = newPlayer.getHand().getFlushSuit();
+       //char tieSuit = newPlayer.getHand().getSuit();
+       //System.out.println(" - " + handRanks);
+       //System.out.println( "FS " + flushSuit);
+       System.out.println();
        playerRanks.add(new PlayerRank(newPlayer, handRanks, flushSuit));
    }
    
@@ -65,25 +73,41 @@ public class PokergameTest {
    //Sorting players in order of first, then second, then third, etc...
    playerRanks.sort((pr1, pr2) -> {
        //Comparing the ranks
-       int rankCompare = pr2.getRank().compareTo(pr1.getRank());
+       int rankCompare = pr2.getRank().compareTo(pr1.getRank());  
        
        //If ranks are equal, compare suits
        if (rankCompare == 0) {
-           int suitCompare = compareSuits(pr1.getSuit(), pr2.getSuit());
+           if (pr1.getRank().equals("Straight") && pr2.getRank().equals("Straight")) {
+               //If both hands are straights, compare the suit of the highest card
+               return compareSuits(pr1.getSuit(), pr2.getSuit());
+           } 
+           else if (pr1.getRank().equals("Two Pair") && pr2.getRank().equals("Two Pair")) {
+               int kickerCompare = compareSuits(pr1.getSuit(), pr2.getSuit());
+               if (kickerCompare == 0) {
+                   return pr1.getPlayer().getName().compareTo(pr2.getPlayer().getName());   
+               }
+               return kickerCompare;  
+          } else if (pr1.getRank().equals("Pair") && pr2.getRank().equals("Pair")) {
+              return compareSuits(pr1.getSuit(), pr2.getSuit());
+          }else {
+               //Then compare the suits on specfic order
+               int suitCompare = compareSuits(pr1.getSuit(), pr2.getSuit());
+               
            
-           if (suitCompare == 0) {
-               return pr1.getPlayer().getName().compareTo(pr2.getPlayer().getName());   
+             if (suitCompare == 0) {
+                 return pr1.getPlayer().getName().compareTo(pr2.getPlayer().getName());   
        }
        
        return suitCompare;
    }
+ }
        
        return rankCompare;
    });
    
    
    //printing out each hand and rank in order
-   
+   System.out.println("//////////////////////////DA WINNERS//////////////////////////////////////////////////////");
    for (PlayerRank newPlayerRank : playerRanks) {
        System.out.println(newPlayerRank.getPlayer().getName() + " 's Hand:");
        newPlayerRank.getPlayer().getHand().printHand();
@@ -94,15 +118,6 @@ public class PokergameTest {
   
        
    
-   
-   //printing out each hand
-  /*  for (Player newPlayer : players) {
-        System.out.println(newPlayer.getName() + " 's Hand: ");
-        newPlayer.getHand().printHand();
-        String handRank = newPlayer.getHand().rankHand();
-        System.out.println(" - " + handRank);
-        System.out.println();
-    } */
     
     deck.printRemainingDeck();
     
