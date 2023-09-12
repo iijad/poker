@@ -38,6 +38,8 @@ import java.util.Set;
 		
 	}
  
+ //using switch cases to change the string value to the value it represents
+ 
  public static int getRankValue(String rank){
    switch(rank) {
        case "2": return 2;
@@ -60,6 +62,7 @@ import java.util.Set;
 
 
 }
+
 /////DECK CLASS///////////////////////////////////////////////////////////////////////////
 	//creating a class for making a deck
 	class Deck {
@@ -79,12 +82,14 @@ import java.util.Set;
    
    
    }
+   
  //shuffles the deck
   public void shuffle(){
     Collections.shuffle(cards);
   
   } 
-  //might have to come back to this method to deal the cards in the order that is asked
+  
+  //dealing cards
   public Cards dealingCards(){
     if (!cards.isEmpty())
     {
@@ -99,6 +104,7 @@ import java.util.Set;
   
   }
   
+  // printing the deck
   public void printDeck(){
   int count = 0;
   
@@ -111,6 +117,7 @@ import java.util.Set;
   }
  }
  
+ //printing what is remaining in the deck
  public void printRemainingDeck(){
    System.out.println();
    System.out.println("Remaining Cards in Deck: " + "\t"); 
@@ -132,11 +139,13 @@ import java.util.Set;
      
    }
    
+   //adding a card to the hand
    public void addCard (Cards card) {
      cards.add(card);
    
    }
    
+   //returning the cards
    public List<Cards> getCards() {
      return cards;
      
@@ -195,6 +204,10 @@ import java.util.Set;
      
      if (rankCounts.containsValue(4)) {
          return "Four of a Kind"; //4 of each number (A, 2, 3....)
+     }
+     
+     if (rankCounts.containsValue(3)) {
+         return "Three of a Kind"; // 3 of each number
      }
      
      if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
