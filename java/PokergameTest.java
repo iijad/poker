@@ -89,7 +89,12 @@ public class PokergameTest {
                return kickerCompare;  
           } else if (pr1.getRank().equals("Pair") && pr2.getRank().equals("Pair")) {
               return compareSuits(pr1.getSuit(), pr2.getSuit());
-          }else {
+          }else if (pr1.getRank().equals("High Card") && pr2.getRank().equals("High Card")){
+              int highCard = compareSuits(pr1.getSuit(), pr2.getSuit());
+              if (highCard == 0) {
+                  return pr1.getPlayer().getName().compareTo(pr2.getPlayer().getName());
+              } 
+          } else {
                //Then compare the suits on specfic order
                int suitCompare = compareSuits(pr1.getSuit(), pr2.getSuit());
                
@@ -104,6 +109,7 @@ public class PokergameTest {
        
        return rankCompare;
    });
+   
    
    
    //printing out each hand and rank in order
@@ -122,9 +128,13 @@ public class PokergameTest {
     deck.printRemainingDeck();
     
     
+        
+       
+    
 	}
  private static int compareSuits(char suit1, char suit2) {
-        String suitOrder = "DCHS"; //The order is Diamonds, Clubs, Hearts, Spades
+       // String suitOrder = "DCHS"; //The order is Diamonds, Clubs, Hearts, Spades
+        String suitOrder = "SHCD"; // The order is Spades, Hearts, Clubs, Diamonds
         return suitOrder.indexOf(suit1) - suitOrder.indexOf(suit2);
     }
 
