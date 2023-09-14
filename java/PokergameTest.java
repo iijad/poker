@@ -116,6 +116,7 @@ public class PokergameTest {
    System.out.println("//////////////////////////DA WINNERS//////////////////////////////////////////////////////");
    for (PlayerRank newPlayerRank : playerRanks) {
        System.out.println(newPlayerRank.getPlayer().getName() + " 's Hand:");
+       newPlayerRank.getPlayer().getHand().sortHand();
        newPlayerRank.getPlayer().getHand().printHand();
        System.out.println(" - " + newPlayerRank.getRank());
        //System.out.println( " FS " + newPlayerRank.getSuit());
