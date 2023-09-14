@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Comparator;
 //if things get hariy, change both types to strings
  class Cards {
 	
@@ -152,7 +153,15 @@ import java.util.Set;
      
    }
  
-       
+    public void sortHand() {
+        Collections.sort(cards, new Comparator<Cards>() {
+        
+        @Override
+        public int compare(Cards card1, Cards card2) {
+            return card1.getSuit() - card2.getSuit();
+          }
+        });
+      }   
        
    
    //printing out the hands
