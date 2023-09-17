@@ -1,11 +1,31 @@
 import java.util.*;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 public class PokergameTest {
 
 	public static void main(String[] args) {
 		//Cards card = new Cards("1", 'S');
 		//System.out.println(card);
-		
-   
+		 String fileName = args[0];
+      
+      try {
+          BufferedReader newReader = new BufferedReader(new FileReader(fileName));
+          String line;
+          
+          System.out.println("Name: " + fileName);
+          while ((line = newReader.readLine()) != null) {
+              System.out.println(line);
+          }
+          
+          newReader.close();
+      } catch (IOException e) {
+          System.err.println("Error reading the file: " + e.getMessage());
+      }
+      
+      
+      
    Deck deck = new Deck();
    deck.shuffle();
    
