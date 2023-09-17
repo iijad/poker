@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Comparator;
 //if things get hariy, change both types to strings
- class Cards {
+ class Cards implements Comparable<Cards>{
 	
 	private String rank;
 	private char suit;
@@ -30,8 +30,13 @@ import java.util.Comparator;
 	public char getSuit() {
 		return suit;
 	}
-	
-	
+ 
+ 
+	//overide the compareTo method to compare each hand
+	@Override  
+    public int compareTo(Cards o) {
+        return this.rank.compareTo(o.rank);
+    }
 	
 	//using an overridden toString method to return the card in order of the number, then rank
 	@Override
@@ -66,7 +71,8 @@ import java.util.Comparator;
 }
 
 /////DECK CLASS///////////////////////////////////////////////////////////////////////////
-	//creating a class for making a deck
+
+
 	class Deck {
    //creating a private final variable since the deck will never change
    private final List<Cards> cards;
@@ -133,11 +139,12 @@ import java.util.Comparator;
  
    //creating the class for making a HAND//////////////////////////////////////////////////////////////
    
- class Hand {
+ class Hand implements Comparable<Hand> {
    private final List<Cards> cards;
    
    public Hand() {
      cards = new ArrayList<>();
+     Collections.sort(cards); //This one line took me 5 hours to do
      
    }
    
@@ -161,7 +168,13 @@ import java.util.Comparator;
             return card1.getSuit() - card2.getSuit();
           }
         });
-      }   
+      } 
+      
+    //overide the compareTo method to compare each hand  
+    @Override  
+    public int compareTo(Hand o) {
+        return this.rankHand().compareTo(o.rankHand());
+    }
        
    
    //printing out the hands
@@ -356,7 +369,7 @@ import java.util.Comparator;
    }
  }
  
- class PlayerRank {
+ class PlayerRank implements Comparable<PlayerRank> {
    private final Player player;
    private final String rank;
    private final char suit; //used for tiebreakers
@@ -374,6 +387,11 @@ import java.util.Comparator;
    public String getRank() {
        return rank;
    }
+   
+   @Override
+    public int compareTo(PlayerRank other) {
+        return this.rank.compareTo(other.rank);
+    }
    
    public char getSuit() {
        return suit;

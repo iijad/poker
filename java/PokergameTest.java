@@ -6,28 +6,22 @@ import java.io.IOException;
 public class PokergameTest {
 
 	public static void main(String[] args) {
-		//Cards card = new Cards("1", 'S');
-		//System.out.println(card);
-		 String fileName = args[0];
-      
-      try {
-          BufferedReader newReader = new BufferedReader(new FileReader(fileName));
-          String line;
-          
-          System.out.println("Name: " + fileName);
-          while ((line = newReader.readLine()) != null) {
-              System.out.println(line);
-          }
-          
-          newReader.close();
-      } catch (IOException e) {
-          System.err.println("Error reading the file: " + e.getMessage());
-      }
-      
-      
-      
+   
    Deck deck = new Deck();
    deck.shuffle();
+   
+   if (args.length == 0) {
+     System.out.println("Card Ranker");
+       
+       
+   } else {
+       String file = args[0];
+       readDeckFromFile(file);
+       return;
+   } 
+   
+   
+   
    
    int numPlayers = 5;
    int cardsPerHand = 5;
@@ -73,7 +67,7 @@ public class PokergameTest {
        }
    
    }
-   
+   Collections.sort(playerRanks);
  
    
    //Calculating and storing ranks for each players hand
@@ -88,7 +82,6 @@ public class PokergameTest {
        System.out.println();
        playerRanks.add(new PlayerRank(newPlayer, handRanks, flushSuit));
    }
-   
    
    //Sorting players in order of first, then second, then third, etc...
    playerRanks.sort((pr1, pr2) -> {
@@ -154,9 +147,38 @@ public class PokergameTest {
     
 	}
  private static int compareSuits(char suit1, char suit2) {
-       // String suitOrder = "DCHS"; //The order is Diamonds, Clubs, Hearts, Spades
-        String suitOrder = "SHCD"; // The order is Spades, Hearts, Clubs, Diamonds
+       String suitOrder = "DCHS"; //The order is Diamonds, Clubs, Hearts, Spades
+        //String suitOrder = "SHCD"; // The order is Spades, Hearts, Clubs, Diamonds
         return suitOrder.indexOf(suit1) - suitOrder.indexOf(suit2);
+    }
+    
+    
+ private static List<Cards> readDeckFromFile(String filePath) {
+        List<Cards> deck = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            System.out.println("File Name: " + filePath);
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+                String[] cardRecords = line.split(",");
+                for (String cardRecord : cardRecords) {
+                    //cardRecord = cardRecord.trim(); // Remove leading/trailing spaces
+                    if (cardRecord.length() != 3) {
+                        System.err.println("Invalid card record: " + cardRecord);
+                        continue;
+                    }
+                    char rank = cardRecord.charAt(0);
+                    char suit = cardRecord.charAt(2); // Assuming the suit is the last character
+                    deck.add(new Cards(String.valueOf(rank), suit));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+            System.exit(1);
+        }
+
+        return deck;
     }
 
 }
