@@ -154,31 +154,37 @@ public class PokergameTest {
     
     
  private static List<Cards> readDeckFromFile(String filePath) {
-        List<Cards> deck = new ArrayList<>();
-
+        List<Hand> hands = new ArrayList<>();
+        List <Cards> cards = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             System.out.println("File Name: " + filePath);
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
                 String[] cardRecords = line.split(",");
-                for (String cardRecord : cardRecords) {
-                    //cardRecord = cardRecord.trim(); // Remove leading/trailing spaces
-                    if (cardRecord.length() != 3) {
-                        System.err.println("Invalid card record: " + cardRecord);
+                 if (cardRecords.length != 3) {
+                        System.err.println("Invalid card record: " + cardRecords);
                         continue;
                     }
-                    char rank = cardRecord.charAt(0);
-                    char suit = cardRecord.charAt(2); // Assuming the suit is the last character
-                    deck.add(new Cards(String.valueOf(rank), suit));
+                //List <Cards> cards = new ArrayList<>();
+                for (String cardRecord : cardRecords) {
+                    String rank = cardRecord.substring(0,1);
+                    char suit = cardRecord.charAt(2);
+                    cards.add(new Cards(rank, suit));
                 }
+                //hands.add(new Hand(cards));
+                   
             }
+          for (int i =0; i <hands.size(); i++) {
+              Hand newHand = hands.get(i);
+              //System.out.println("Player " + (i+1) + ": " newHand.rankHand(hand));
+          }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
             System.exit(1);
         }
 
-        return deck;
+        return cards;
     }
 
 }
