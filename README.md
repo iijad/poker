@@ -1,6 +1,6 @@
 # Five Card Stud
 
-
+Commands for the java project: javac Cards.java, javac Pokergametest.java, java PokergameTest, java PokergameTest handsets
 
 ## Getting started
 
