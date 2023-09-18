@@ -10,11 +10,13 @@ public class PokergameTest {
    Deck deck = new Deck();
    deck.shuffle();
    
-   if (args.length == 0) {
-     System.out.println("Card Ranker");
-       
-       
+   if (args.length == 0) { //if there is no argument, go to the main program
+     System.out.println("*** USING RANDOMIZED DECK OF CARDS ***");
+     System.out.println();
+     System.out.println();
+     System.out.println("*** Shuffled 52 card deck: "); 
    } else {
+       System.out.println("*** USING TEST DECK ***");
        String file = args[0];
        readDeckFromFile(file);
        return;
@@ -23,7 +25,7 @@ public class PokergameTest {
    
    
    
-   int numPlayers = 5;
+   int numPlayers = 6;
    int cardsPerHand = 5;
    Hand newHand = new Hand();
    deck.printDeck();
@@ -71,6 +73,7 @@ public class PokergameTest {
  
    
    //Calculating and storing ranks for each players hand
+   System.out.println("Here are the six hands... ");
    for (Player newPlayer : players) {
        System.out.println(newPlayer.getName() + " 's Hand:");
        newPlayer.getHand().printHand();
@@ -126,7 +129,7 @@ public class PokergameTest {
    
    
    //printing out each hand and rank in order
-   System.out.println("//////////////////////////DA WINNERS//////////////////////////////////////////////////////");
+   System.out.println("//////////////////////////Winning Hand Order//////////////////////////////////////////////////////");
    for (PlayerRank newPlayerRank : playerRanks) {
        System.out.println(newPlayerRank.getPlayer().getName() + " 's Hand:");
        newPlayerRank.getPlayer().getHand().sortHand();
@@ -138,7 +141,6 @@ public class PokergameTest {
   
        
    
-    
     deck.printRemainingDeck();
     
     
@@ -162,16 +164,30 @@ public class PokergameTest {
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
                 String[] cardRecords = line.split(",");
-                 if (cardRecords.length != 3) {
+                 if (cardRecords.length != 5) {
                         System.err.println("Invalid card record: " + cardRecords);
+                        System.out.println(cardRecords.length);
                         continue;
-                    }
-                //List <Cards> cards = new ArrayList<>();
+                    } 
+                  /*int numPlayers = 6;
+                 int cardsPerHand = 5;
+                 Hand handTwo = new Hand();
+                 List<Player> players = new ArrayList<>();
+                for (int i = 1; i < numPlayers; i++) {
+                     players.add(new Player("Player " + i));
+                }
+                List<PlayerRank> playerRanks = new ArrayList<>();
+                    
                 for (String cardRecord : cardRecords) {
                     String rank = cardRecord.substring(0,1);
                     char suit = cardRecord.charAt(2);
                     cards.add(new Cards(rank, suit));
                 }
+                for (int i=0; i < cardsPerHand; i++) {
+                     for (Player player: players) { 
+                         Cards newCards = cards.remove(0);
+                } 
+            }*/
                 //hands.add(new Hand(cards));
                    
             }
@@ -186,6 +202,7 @@ public class PokergameTest {
 
         return cards;
     }
-
 }
+
+
 
