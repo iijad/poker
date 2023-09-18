@@ -15,7 +15,7 @@ public class PokergameTest {
      System.out.println();
      System.out.println();
      System.out.println("*** Shuffled 52 card deck: "); 
-   } else {
+   } else {//for the file
        System.out.println("*** USING TEST DECK ***");
        String file = args[0];
        readDeckFromFile(file);
@@ -30,21 +30,6 @@ public class PokergameTest {
    Hand newHand = new Hand();
    deck.printDeck();
    
-  /* for (int i=0; i < 5; i++)
-   {
-     Cards card2 = deck.dealingCards();
-     if (card2 != null)
-     {
-       System.out.println("Dealing: " + card2);
-     }
-     else{
-       System.out.println("The deck is empty");
-       break;
-     
-     }
-   
-   
-   }*/
    
    // Creating and dealing hands to players
    List<Player> players = new ArrayList<>();
@@ -147,7 +132,7 @@ public class PokergameTest {
         
        
     
-	}
+	}//comparing suits in case of a tie
  private static int compareSuits(char suit1, char suit2) {
        String suitOrder = "DCHS"; //The order is Diamonds, Clubs, Hearts, Spades
         //String suitOrder = "SHCD"; // The order is Spades, Hearts, Clubs, Diamonds
