@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Comparator;
-//if things get hariy, change both types to strings
+
  class Cards implements Comparable<Cards>{
 	
 	private String rank;
 	private char suit;
 	
-	//creating the constructor for the card class. Using this to eliminate confusion between the variables
+	//Constructor
 	public Cards(String rank, char suit) {
 		this.rank = rank;
 		this.suit = suit;
@@ -20,13 +20,12 @@ import java.util.Comparator;
 			
 	}
 	
-	//returns the rank of the card
-		public String getRank() {
+
+  public String getRank() {
 			return rank;
-		}
+  }
 	
 	
-	//returns the suit of the card
 	public char getSuit() {
 		return suit;
 	}
@@ -137,7 +136,7 @@ import java.util.Comparator;
  }
  
  
-   //creating the class for making a HAND//////////////////////////////////////////////////////////////
+   //HAND CLASS//////////////////////////////////////////////////////////////
    
  class Hand implements Comparable<Hand> {
    private final List<Cards> cards;
@@ -192,7 +191,7 @@ import java.util.Comparator;
    
    @Override 
    public String toString() {
-   // StringBuilder It constructs a blank string builder with a capacity of 16 characters. 
+   // StringBuilder allows to store each card to make a hand and return it
    
      StringBuilder handString = new StringBuilder();
      int count = 0;
@@ -207,7 +206,7 @@ import java.util.Comparator;
  }
  
    public String rankHand() {
-     //Creating a hash map to rank them hands, come back for formatting
+     //Creating a hash map to rank them hands
      Map<Character, Integer> suitCounts = new HashMap<>(); //for the suits
      Map<String, Integer> rankCounts = new HashMap<>();  //for the ranks
      for (Cards newCard: cards) {
@@ -237,11 +236,11 @@ import java.util.Comparator;
      }
      
      if (rankCounts.containsValue(3) && rankCounts.containsValue(2)) {
-         return "Full House"; 
+         return "Full House";  //Full House, three of a kind and a pair
      }
      
      if (rankCounts.size() == 5 && isStraight(rankCounts.keySet())) {
-       return "Straight" ;
+       return "Straight" ; //5 in a row
      }
      
      
@@ -260,11 +259,11 @@ import java.util.Comparator;
          if (pairCount == 2) {
              return "Two Pair";
          } else {
-             return "Pair";
+             return "Pair"; //2 of a rank
          }
      }
      
-     return "High Card";
+     return "High Card"; //the highest card
    }
          
      
@@ -282,21 +281,12 @@ import java.util.Comparator;
          }
      }
      
-     return ' ' ; // there is No flush ani
+     return ' ' ; // there is No flush 
  }
  
  
  
- /*private boolean isFlush() {
-    char suit = cards.get(0).getSuit();
-   for (Cards newCard : cards) {
-       if (newCard.getSuit().charAt(1) != suit.charAt(0)) {
-           return false; 
-       }
-   }
- 
-   return true;
- } */
+
  
  
  private boolean isRoyalStraightFlush(Set<String> ranks, char suit) {
