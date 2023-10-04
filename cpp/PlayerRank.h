@@ -13,6 +13,7 @@ class PlayerRank {
         const string& getRank() const;
         int compareTo(const PlayerRank& other) const;
         char getSuit() const;
+        bool operator<(const PlayerRank& other) const;
     
     private:
         Player player;

@@ -24,6 +24,10 @@ int PlayerRank::compareTo(const PlayerRank& other) const {
     return rank.compare(other.rank);
 }
 
+bool PlayerRank::operator<(const PlayerRank& other) const {
+    return rank < other.rank;
+}
+
 
 
 

@@ -14,11 +14,13 @@ public:
 	void clear();
 	void printHand() const;
 	int getHandValue() const;
+  string rankHand() const;
+  string toString() const;
 
 private:
 	vector<Cards> cards;
 };
 
-#endif //HAND_H
+#endif
 	
 
