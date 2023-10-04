@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -10,6 +11,44 @@
 
 using namespace std;
 
+vector<Cards> readDeckFromFile(const string& filePath) {
+    vector<Hand> hands;
+    vector<Cards> cards;
+
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filePath << std::endl;
+        return cards;
+    }
+
+     string line;
+     cout << "File Name: " << filePath <<  endl;
+    while ( getline(file, line)) {
+         cout << line <<  endl;
+         vector< string> cardRecords;
+        size_t pos = 0;
+        while ((pos = line.find(',')) !=  string::npos) {
+            cardRecords.push_back(line.substr(0, pos));
+            line.erase(0, pos + 1);
+        }
+        cardRecords.push_back(line);
+
+        if (cardRecords.size() != 5) {
+             cerr << "Invalid card record: ";
+            for (const  string& record : cardRecords) {
+                 cerr << record << ",";
+            }
+             cerr <<  endl;
+            continue;
+        }
+
+        // Process cardRecords and create Cards objects
+        // Add them to the 'cards' vector as needed
+    }
+
+    return cards;
+}
+
 
 int main(int argc, char *argv[]) {
     Deck deck;
@@ -19,11 +58,13 @@ int main(int argc, char *argv[]) {
     }
     if (argc > 1) {
         cout << "*** Shuffled 52 card Deck ***" << endl;
+        string filePath = "your_file_path_here.txt";
+        vector<Cards> deck = readDeckFromFile(filePath);
     }
     // Draw and print a few cards from the deck
    for (int i = 0; i < 5; i++) {
         Cards drawnCard = deck.drawCards();
-        std::cout << "Drawn card: " << drawnCard.toString() << std::endl;
+         cout << "Drawn card: " << drawnCard.toString() <<  endl;
     }
     
     int numPlayers = 6;
@@ -69,17 +110,17 @@ int main(int argc, char *argv[]) {
     }
     
     
-    cout << "//////////////////////////Winning Hand Order//////////////////////////////////////////////////////" << std::endl;
+    cout << "//////////////////////////Winning Hand Order//////////////////////////////////////////////////////" <<  endl;
      for (const PlayerRank& newPlayerRank : playerRanks) {
-        std::cout << newPlayerRank.getPlayer().getName() << "'s Hand:" << std::endl;
+         cout << newPlayerRank.getPlayer().getName() << "'s Hand:" <<  endl;
         newPlayerRank.getPlayer().getHand()/*.sortHand()*/;
         newPlayerRank.getPlayer().getHand().printHand();
-        std::cout << " - " << newPlayerRank.getRank() << std::endl;
-        // std::cout << " FS " << newPlayerRank.getSuit() << std::endl;
-        std::cout << std::endl;
+         cout << " - " << newPlayerRank.getRank() <<  endl;
+        //  cout << " FS " << newPlayerRank.getSuit() <<  endl;
+         cout <<  endl;
     }
     
-    std::cout << "Remaining cards in the deck: " << deck.cardsRemaining() << std::endl;
+     cout << "Remaining cards in the deck: " << deck.cardsRemaining() <<  endl;
     
     return 0;
 }
