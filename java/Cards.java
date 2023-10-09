@@ -140,10 +140,11 @@ import java.util.Comparator;
    
  class Hand implements Comparable<Hand> {
    private final List<Cards> cards;
+   private String handRank;
    
    public Hand() {
      cards = new ArrayList<>();
-     Collections.sort(cards); //This one line took me 5 hours to do
+     Collections.sort(cards); 
      
    }
    
@@ -209,6 +210,7 @@ import java.util.Comparator;
      //Creating a hash map to rank them hands
      Map<Character, Integer> suitCounts = new HashMap<>(); //for the suits
      Map<String, Integer> rankCounts = new HashMap<>();  //for the ranks
+     this.handRank = "Royal Straight Flush";
      for (Cards newCard: cards) {
        char suit = newCard.getSuit();
        String rank = newCard.getRank();
@@ -264,9 +266,69 @@ import java.util.Comparator;
      }
      
      return "High Card"; //the highest card
-   }
-         
      
+     
+     String rank = rankHand();
+     
+     if (rank.equals("Royal Straight Flush") || rank.equals("Straight Flush") || rank.equals("Flush")) {
+         List<Cards> sortedCards = SCBR(cards);
+         Cards highestCard = sortedCards.get(sortedCards.size() - 1);
+         this.handRank += " - Highest Card Suit: " + highestCard.getSuit();
+     } else if (rank.equals("Straight")) {
+         List<Cards> sortedCards = SCBR(cards);
+         Cards highestCard = sortedCards.get(sortedCards.size() - 1);
+         this.handRank += " - Straight: Highest Card Suit: " + highestCard.getSuit();
+     } else if (rank.equals("Two Pair")) {
+         List<Cards> sortedCards = SCBR(cards);
+         Cards highPairCard = null;
+         Cards lowPairCard = null;
+         Cards kickerCard = null;
+         for (Cards card : sortedCards) {
+             int frequency = Collections.frequency(sortedCards, card);
+             if (frequency == 2) {
+                 if (highPairCard == null) {
+                      highPairCard = card;
+                 } else if (lowPairCard == null) {
+                      lowPairCard = card;
+                 }
+             } else if (frequency == 1) {
+                  kickerCard = card;
+             }
+         }
+         
+         this.handRank += " -Two Pair: Kicker Suit: " + kickerCard.getSuit();
+     } else if (rank.equals("Pair")) {
+         List<Cards> sortedCards = SCBR(cards);
+         Cards pairCard = null;
+         Cards kickerCard = null;
+         for (Cards card : sortedCards) {
+             int frequency = Collections.frequency(sortedCards, card);
+             if (frequency == 2) {
+                 pairCard = card;
+             } else if (frequency == 1) {
+                 kickerCard = card;
+             }
+         }
+         
+         this.handRank += " - Pair: Kicker Suit: " + kickerCard.getSuit();
+     } else if (rank.equals("High Card")) {
+          List<Cards> sortedCards = SCBR(cards);
+          Cards highestCard = sortedCards.get(sortedCards.size() - 1);
+          this.handRank += " - High Card: Suit: " + highestCard.getSuit();
+     }
+         
+              
+   }
+  //sortCardsByRank       
+ private List<Cards> SCBR(List<Cards> cards) { 
+     Collections.sort(cards, new Comparator<Cards>() {
+         @Override
+         public int compare(Cards card1, Cards card2) {
+           return card1.getRank().compareTo(card2.getRank());
+          }
+        });
+        return cards;
+ }  
    
  public char getFlushSuit() {
      Map<Character, Integer> suitCounts = new HashMap<>();

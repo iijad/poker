@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 public class PokergameTest {
 
 	public static void main(String[] args) {
@@ -109,7 +111,7 @@ public class PokergameTest {
  }
        
        return rankCompare;
-   });
+   }); 
    
    
    
@@ -144,6 +146,7 @@ public class PokergameTest {
         List<List<Cards>> allHands = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            Set<String> uniqueCards = new HashSet<>();
             System.out.println("File Name: " + filePath);
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
@@ -152,7 +155,15 @@ public class PokergameTest {
                         System.err.println("Invalid card record: " + cardRecords);
                         System.out.println(cardRecords.length);
                         continue;
-                    } 
+                    }
+                   for (String cardRecord : cardRecords) {
+                    if (uniqueCards.contains(cardRecord)) {
+                         System.out.println( " *** ERROR - DUPLICATE CARD FOUND IN DECK *** " );
+                         System.err.println("DUPLICATE: " + cardRecord);
+                         System.exit(1);
+                    }
+                    uniqueCards.add(cardRecord);
+                }
                   if (cardRecords.length == 5){
                       List<Cards> newHand = new ArrayList<>();
                       for (String cardStr : cardRecords) {
