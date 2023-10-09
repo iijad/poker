@@ -140,9 +140,8 @@ public class PokergameTest {
     }
     
     
- private static List<Cards> readDeckFromFile(String filePath) {
-        List<Hand> hands = new ArrayList<>();
-        List <Cards> cards = new ArrayList<>();
+ private static void readDeckFromFile(String filePath) {
+        List<List<Cards>> allHands = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             System.out.println("File Name: " + filePath);
@@ -154,38 +153,47 @@ public class PokergameTest {
                         System.out.println(cardRecords.length);
                         continue;
                     } 
-                  /*int numPlayers = 6;
-                 int cardsPerHand = 5;
-                 Hand handTwo = new Hand();
-                 List<Player> players = new ArrayList<>();
-                for (int i = 1; i < numPlayers; i++) {
-                     players.add(new Player("Player " + i));
-                }
-                List<PlayerRank> playerRanks = new ArrayList<>();
-                    
-                for (String cardRecord : cardRecords) {
-                    String rank = cardRecord.substring(0,1);
-                    char suit = cardRecord.charAt(2);
-                    cards.add(new Cards(rank, suit));
-                }
-                for (int i=0; i < cardsPerHand; i++) {
-                     for (Player player: players) { 
-                         Cards newCards = cards.remove(0);
-                } 
-            }*/
-                //hands.add(new Hand(cards));
+                  if (cardRecords.length == 5){
+                      List<Cards> newHand = new ArrayList<>();
+                      for (String cardStr : cardRecords) {
+                        String rank;
+                        char suit;
+                        if (cardStr.length() == 2) {
+                            rank = cardStr.substring(0,1);
+                            suit = cardStr.charAt(1);
+                        } else if (cardStr.length() == 3) {
+                            rank = cardStr.substring(0, 2);
+                            suit = cardStr.charAt(2);
+                        } else {
+                            System.err.println("Invalid card format: " + cardStr);
+                            continue;
+                        }
+                        Cards card = new Cards(rank, suit);
+                        newHand.add(card);
+                      }
+                      allHands.add(newHand);
+                  }
                    
             }
-          for (int i =0; i <hands.size(); i++) {
-              Hand newHand = hands.get(i);
-              //System.out.println("Player " + (i+1) + ": " newHand.rankHand(hand));
-          }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
             System.exit(1);
         }
+        
+        if (allHands.size() < 5) {
+            System.out.println("Not enough cards to make a hand.");
+        } else {
+            System.out.println("Here are the six hands...");
+            for (int i = 0; i < 6; i++) {
+                List<Cards> hand = allHands.get(i);
+                System.out.println("Hand " + (i + 1) + ":");
+                for (Cards card : hand) {
+                    System.out.print(card + "\t");
+                }
+                System.out.println();
+            }
+        }
 
-        return cards;
     }
 }
 
