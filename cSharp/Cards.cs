@@ -54,6 +54,39 @@ public class Cards {
                 throw new ArgumentException("Invalid card rank.");
         }
     }
+    public int TieBreakValue() {
+      int rankValue;
+      if (int.TryParse(Rank, out rankValue))
+      {
+        return rankValue;
+      }
+       else { 
+      switch (Rank) {
+          case "A":
+                return 14; // Assign Ace a higher value
+           case "K":
+                return 13;
+           case "Q":
+                return 12;
+           case "J":
+                return 11;
+           default:
+                 throw new InvalidOperationException("Invalid card rank.");
+           }
+      }
+    }
+    
+    public int CompareForTiebreaking(Cards otherCard) {
+        int rankComparison = GetRankValue().CompareTo(otherCard.GetRankValue());
+        
+        if (rankComparison != 0) {
+            return rankComparison;
+        }
+        
+        string suitsOrder = "SHCD"; // Spades, Hearts, Clubs, Diamonds
+        return suitsOrder.IndexOf(Suit).CompareTo(suitsOrder.IndexOf(otherCard.Suit));
+    }
+}    
     
     ////Deck Class/////
   public class Deck  {
@@ -72,7 +105,7 @@ public class Cards {
         random = new Random();
 
         char[] suits = { 'H', 'D', 'C', 'S' }; // Hearts, Diamonds, Clubs, Spades
-        string[] ranks = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+        string[] ranks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
         foreach (char suit in suits)
         {
@@ -107,10 +140,14 @@ public class Cards {
     
     public void PrintDeck()
     {
-        foreach (Cards card in cards)
-        {
-            Console.WriteLine(card.GetDisplayName());
+        int cardsPerLine = 13;
+        for (int i = 0; i < cards.Count; i++) {
+             Console.Write(cards[i].GetDisplayName().PadRight(9)); // Adjust the padding as needed
+             if ((i + 1) % cardsPerLine == 0) {
+                 Console.WriteLine();
+             }
         }
+        Console.WriteLine();
     }
     
     public void PrintRemainingDeck()
@@ -149,11 +186,12 @@ public class Cards {
     {
         cards.Sort((card1, card2) =>
         {
-            if (card1.Rank == card2.Rank)
+            if (card1.TieBreakValue() == card2.TieBreakValue())
             {
-                return card1.Suit.CompareTo(card2.Suit);
+                string suitsOrder = "SHCD"; // Spades, Hearts, Clubs, Diamonds
+                return suitsOrder.IndexOf(card1.Suit).CompareTo(suitsOrder.IndexOf(card2.Suit));
             }
-            return card1.Rank.CompareTo(card2.Rank);
+            return card1.TieBreakValue().CompareTo(card2.TieBreakValue());
         });
     }
     
@@ -177,17 +215,21 @@ public class Cards {
     // Print the cards in the hand
     public void PrintHand()
     {
-        foreach (Cards card in cards)
-        {
-            Console.WriteLine(card.GetDisplayName());
+        int cardsPerLine = 5;
+        for (int i = 0; i < cards.Count; i++) {
+            Console.Write(cards[i].GetDisplayName().PadRight(9)); 
+            if ((i + 1) % cardsPerLine == 0) {
+                Console.WriteLine();
+            }
         }
+        Console.WriteLine();
     }
     
-    public string RankHand()
+  public string RankHand()
     {
-    if (IsRoyalFlush())
+    if (IsRoyalStraightFlush())
     {
-        return "Royal Flush";
+        return "Royal Straight Flush";
     }
     if (IsStraightFlush())
     {
@@ -225,7 +267,7 @@ public class Cards {
     return "High Card";
 }
 // Check for a Royal Flush
-private bool IsRoyalFlush()
+public bool IsRoyalStraightFlush()
 {
     if (IsStraightFlush() && cards.Any(card => card.Rank == "A"))
     {
@@ -235,7 +277,7 @@ private bool IsRoyalFlush()
 }
 
 // Check for a Straight Flush
-private bool IsStraightFlush()
+public bool IsStraightFlush()
 {
     if (IsFlush() && IsStraight())
     {
@@ -245,14 +287,14 @@ private bool IsStraightFlush()
 }
 
 // Check for Four of a Kind
-private bool IsFourOfAKind()
+public bool IsFourOfAKind()
 {
     var groupedCards = cards.GroupBy(card => card.Rank);
     return groupedCards.Any(group => group.Count() == 4);
 }
 
 // Check for a Full House
-private bool IsFullHouse()
+public bool IsFullHouse()
 {
     var groupedCards = cards.GroupBy(card => card.Rank);
     return groupedCards.Any(group => group.Count() == 3) &&
@@ -260,13 +302,13 @@ private bool IsFullHouse()
 }
 
 // Check for a Flush
-private bool IsFlush()
+public bool IsFlush()
 {
     return cards.All(card => card.Suit == cards.First().Suit);
 }
 
 // Check for a Straight
-private bool IsStraight()
+public bool IsStraight()
 {
     var sortedCards = cards.OrderBy(card => card.GetRankValue()).ToList();
     for (int i = 0; i < sortedCards.Count - 1; i++)
@@ -279,22 +321,54 @@ private bool IsStraight()
     return true;
 }
 
+ public char GetSuitOfHighestCardInStraight() {
+     if (!IsStraight()) {
+         throw new InvalidOperationException("The hand is not a straight.");
+     }
+     var sortedCards = cards.OrderBy(card => card.GetRankValue()).ToList();
+     return sortedCards.Last().Suit;
+ }
+ 
+ public char GetSuitOfNonPairCard() {
+     var groupedCards = cards.GroupBy(card => card.Rank);
+     List<Cards> nonPairCards = groupedCards.Where(group => group.Count() != 2).SelectMany(group => group).ToList();
+      if (nonPairCards.Count != 1) {
+           throw new InvalidOperationException("The hand is not a valid Two Pair hand.");
+      }
+      return nonPairCards[0].Suit;
+ }
+ 
+ public char GetSuitOfHighestNonPairCard() {
+     var groupedCards = cards.GroupBy(card => card.Rank);
+     List<Cards> nonPairCards = groupedCards.Where(group => group.Count() == 1).SelectMany(group => group).ToList();
+     if (nonPairCards.Count == 0) {
+         throw new InvalidOperationException("There are no non-pair cards in the hand.");
+     }
+     var highestNonPairCard = nonPairCards.OrderByDescending(card => card.GetRankValue()).First();
+     return highestNonPairCard.Suit;
+}
+  public char GetSuitOfHighestCardInHighCard() {
+       var sortedCards = cards.OrderByDescending(card => card.GetRankValue()).ToList();
+       return sortedCards.First().Suit;
+  }
+
+
 // Check for Three of a Kind
-private bool IsThreeOfAKind()
+public bool IsThreeOfAKind()
 {
     var groupedCards = cards.GroupBy(card => card.Rank);
     return groupedCards.Any(group => group.Count() == 3);
 }
 
 // Check for Two Pair
-private bool IsTwoPair()
+public bool IsTwoPair()
 {
     var groupedCards = cards.GroupBy(card => card.Rank);
     return groupedCards.Count(group => group.Count() == 2) == 2;
 }
 
 // Check for a Pair
-private bool IsPair()
+public bool IsPair()
 {
     var groupedCards = cards.GroupBy(card => card.Rank);
     return groupedCards.Any(group => group.Count() == 2);
@@ -376,4 +450,4 @@ public class PlayerRank
     
 
       
-}
+
