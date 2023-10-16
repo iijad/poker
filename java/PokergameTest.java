@@ -5,6 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+/* This class is the test for the Cards.java class. It is meant to, in case of no argument, create and shuffle
+  a 52 card deck and deal it to 6 players. It then prints the hands and ranks the hands according to the rules 
+  of 5 Card Stud (still have problems with the tiebreakers)
+  
+
+*/
 public class PokergameTest {
 
 	public static void main(String[] args) {
@@ -141,7 +148,7 @@ public class PokergameTest {
         return suitOrder.indexOf(suit1) - suitOrder.indexOf(suit2);
     }
     
-    
+    //method for reading in the file to create the hands and print them
  private static void readDeckFromFile(String filePath) {
         List<List<Cards>> allHands = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

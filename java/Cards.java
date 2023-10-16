@@ -7,6 +7,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Comparator;
 
+/* This class contains the classes for a card, a deck, an hand, a player, and a ranking for each player
+  It contains all the methods to put into use for ranking and printing hands of cards
+
+*/
+
+///Card Class///////////////////////////////
  class Cards implements Comparable<Cards>{
 	
 	private String rank;
@@ -206,6 +212,8 @@ import java.util.Comparator;
    return handString.toString();
  }
  
+ 
+   ////the method to rank the hands according to the rules of 5 card stud
    public String rankHand() {
      //Creating a hash map to rank them hands
      Map<Character, Integer> suitCounts = new HashMap<>(); //for the suits
@@ -420,7 +428,7 @@ import java.util.Comparator;
      
    }
  }
- 
+   ////////PLAYERRANK CLASS///////////////////
  class PlayerRank implements Comparable<PlayerRank> {
    private final Player player;
    private final String rank;
