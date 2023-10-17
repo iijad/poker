@@ -2,7 +2,7 @@
 #include <string>
 #include "Cards.h"
 using namespace std;
-
+//Card Class
 Cards::Cards(char s, string r) : suit(s), rank(r) {}
 
 char Cards::getSuit() const {
@@ -16,7 +16,7 @@ string Cards::getRank() const {
 string Cards::toString() const {
     return rank + "" + suit;
 }
-
+//getting the value of the card
 int Cards::getRankValue(const string& rank) const {
     if (rank == "2") return 2;  
        else if (rank == "3") return 3;
@@ -33,7 +33,7 @@ int Cards::getRankValue(const string& rank) const {
         else if (rank == "A") return 14;
         else return -1;
 } 
-
+//the operations for comparing the cards
 bool Cards::operator<(const Cards& o) const {
     return this->rank < o.rank;
 }
@@ -41,3 +41,7 @@ bool Cards::operator<(const Cards& o) const {
  bool Cards::operator>(const Cards& o) const {
      return this->rank > o.rank;
  }
+ //making sure a card is valid when making it
+bool Cards::isValid() const {
+    return !rank.empty() && suit != '\0';
+}

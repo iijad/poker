@@ -11,6 +11,7 @@
 
 using namespace std;
 
+//method for reading the cards from the file and printing them out
 vector<Cards> readDeckFromFile(const string& filePath) {
     vector<Hand> hands;
     vector<Cards> cards;
@@ -42,8 +43,7 @@ vector<Cards> readDeckFromFile(const string& filePath) {
             continue;
         }
 
-        // Process cardRecords and create Cards objects
-        // Add them to the 'cards' vector as needed
+        // Process cardRecords and create Card objects
     }
 
     return cards;
@@ -54,34 +54,33 @@ int main(int argc, char *argv[]) {
     Deck deck;
     deck.shuffle();
     if (argc == 1) {
+        cout << "*** P O K E R   H A N D   A N A L Y S E R ***" <<endl;
         cout << "*** USING RANDOMIZED DECK OF CARDS ***" << endl;
     }
     if (argc > 1) {
         cout << "*** Shuffled 52 card Deck ***" << endl;
-        string filePath = "your_file_path_here.txt";
+        string filePath = argv[1];
         vector<Cards> deck = readDeckFromFile(filePath);
     }
-    // Draw and print a few cards from the deck
-   for (int i = 0; i < 5; i++) {
-        Cards drawnCard = deck.drawCards();
-         cout << "Drawn card: " << drawnCard.toString() <<  endl;
-    }
-    
+
+    //creating the players
     int numPlayers = 6;
     int cardsPerHand = 5;
+    
     Hand newHand;
     deck.printDeck();
     
     vector<Player> players;
     for (int i = 1; i <= numPlayers; i++) {
         string playerName = " " + to_string(i);
-        players.emplace_back(playerName);
+        Player player(playerName);
+        players.push_back(player);
     }
     
     for (const Player& player : players) {
         cout << player.getName() << endl;
     }
-    
+    //printing out the players
     vector<PlayerRank> playerRanks;
     for (int i=0; i < cardsPerHand; i++) {
         for (Player& player : players) {
@@ -110,9 +109,8 @@ int main(int argc, char *argv[]) {
     }
     
     
-    cout << "//////////////////////////Winning Hand Order//////////////////////////////////////////////////////" <<  endl;
+    cout << "--- WINNING HAND ORDER ---" <<  endl;
      for (const PlayerRank& newPlayerRank : playerRanks) {
-         cout << newPlayerRank.getPlayer().getName() << "'s Hand:" <<  endl;
         newPlayerRank.getPlayer().getHand()/*.sortHand()*/;
         newPlayerRank.getPlayer().getHand().printHand();
          cout << " - " << newPlayerRank.getRank() <<  endl;

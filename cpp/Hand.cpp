@@ -5,28 +5,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
+//Hand Class
 Hand::Hand() {
 
 cards = vector<Cards>();
 sort(cards.begin(), cards.end());
 
 }
-
+//adding a card to the hand
 void Hand::addCard(const Cards& card) {
 	cards.push_back(card);
 }
-
+//cleaing the hand
 void Hand::clear() {
 	cards.clear();
 }
-
+//printing each hand for each player
 void Hand::printHand() const {
 	for (const Cards& card : cards) {
 		cout << card.toString() << endl;
 	}
 } 
-
+//getting the value of each hand
 int Hand::getHandValue() const {
 	int value = 0;
 	int numAces = 0;
@@ -53,7 +53,7 @@ while (value > 21 && numAces > 0) {
 }
 return value;
 } 
-
+//ranking each hand according to the rules of 5 card stud
 string Hand::rankHand() const {
     vector<Cards> sortedCards = cards;
     sort(sortedCards.begin(), sortedCards.end(), [](const Cards& a, const Cards& b) {
@@ -131,7 +131,7 @@ if (isStraight) {
 
 return "High Card";
 }
-
+//formatting each hand
 string Hand::toString() const {
     ostringstream handString;
     int count = 0;

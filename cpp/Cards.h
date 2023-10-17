@@ -6,7 +6,10 @@
 
 
 using namespace std;
-
+/*
+  This is the specification class for the Card class. It contains all the methods needed and will be defined in the 
+  Cards.cpp file
+*/
 class Cards {
     public:
         Cards(char s, string r);
@@ -16,6 +19,7 @@ class Cards {
         int getRankValue(const string& rank) const;
         bool operator<(const Cards& o) const;
         bool operator>(const Cards& o) const;
+        bool isValid() const;
         
     private:
         char suit;
