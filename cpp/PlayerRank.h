@@ -3,7 +3,11 @@
 
 #include "Player.h"
 
+/* 
+  This is the specification file for the PlayerRank class. It has all the methods needed to rank each player and will
+  be defined in the PlayerRank.cpp file
 
+*/
 using namespace std;
 
 class PlayerRank {

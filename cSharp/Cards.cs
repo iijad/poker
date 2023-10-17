@@ -14,12 +14,12 @@ public class Cards {
         Rank = rank;
     }
 
-    // Method to get the card's display name (e.g., "Ace of Spades")
+    // Method to get the card's display name (e.g., "Ace of Spades = AH")
     public string GetDisplayName()
     {
         return $"{Rank}{Suit}";
     }
-    
+    //getting the value for each rank
     public int GetRankValue()
     {
         switch (Rank)
@@ -54,6 +54,8 @@ public class Cards {
                 throw new ArgumentException("Invalid card rank.");
         }
     }
+    
+    //having a tiebreaker rank in case of ties
     public int TieBreakValue() {
       int rankValue;
       if (int.TryParse(Rank, out rankValue))
@@ -63,7 +65,7 @@ public class Cards {
        else { 
       switch (Rank) {
           case "A":
-                return 14; // Assign Ace a higher value
+                return 14; // Assigns Ace as a higher value
            case "K":
                 return 13;
            case "Q":
@@ -115,12 +117,12 @@ public class Cards {
             }
         }
     }
-    
+    //shuffling the deck
     public void Shuffle()
     {
         cards = cards.OrderBy(card => random.Next()).ToList();
     }
-    
+    //dealing cards from a deck
     public Cards Deal()
     {
         if (cards.Count == 0)
@@ -132,12 +134,12 @@ public class Cards {
         cards.Remove(card);
         return card;
     }
-    
+    //returning the size of the deck
     public int Size()
     {
         return cards.Count;
     }
-    
+    //printing the contents of the deck
     public void PrintDeck()
     {
         int cardsPerLine = 13;
@@ -149,7 +151,7 @@ public class Cards {
         }
         Console.WriteLine();
     }
-    
+    //printing whats remaining in the deck
     public void PrintRemainingDeck()
     {
         foreach (Cards card in cards)
@@ -320,7 +322,7 @@ public bool IsStraight()
     }
     return true;
 }
-
+///making the tiebreakers for the Hands in case of Straight, pair, two pair, and high card
  public char GetSuitOfHighestCardInStraight() {
      if (!IsStraight()) {
          throw new InvalidOperationException("The hand is not a straight.");

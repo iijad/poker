@@ -4,7 +4,7 @@
 using namespace std;
 //Card Class
 Cards::Cards(char s, string r) : suit(s), rank(r) {}
-
+//the getters for the suit and for the rank
 char Cards::getSuit() const {
     return suit;
 }
@@ -12,7 +12,7 @@ char Cards::getSuit() const {
 string Cards::getRank() const {
     return rank;
 }
-
+//formatting the cards in the order specifec (Ex AH = Ace of Hearts)
 string Cards::toString() const {
     return rank + "" + suit;
 }

@@ -3,6 +3,11 @@
 #include <iostream>
 #include "Cards.h"
 #include <vector>
+/* 
+  This is the specification file for the Hand class. It has all the methods needed for a Hand and will
+  be defined in the Hand.cpp file
+
+*/
 
 using namespace std;
 

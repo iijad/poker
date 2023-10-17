@@ -7,6 +7,12 @@ from Cards import Hand
 from Cards import Player
 from Cards import PlayerRank
 
+
+  
+#This class creates the 6 players for the poker game, prints each hand, ranks each hand, 
+#and then prints the ranked hands 
+
+
 def compare_suits(suit1, suit2):
     suit_order = "DCHS"  # The order is Diamonds, Clubs, Hearts, Spades
     if suit1 is None:
@@ -71,11 +77,13 @@ if __name__ == "__main__":
     deck.shuffle()
 
     if len(sys.argv) == 1:
+        print("*** P O K E R   H A N D   A N A L Y S E R ***")
         print("*** USING RANDOMIZED DECK OF CARDS ***")
         print()
         print()
         print("*** Shuffled 52 card deck: ")
     else:
+        print("*** P O K E R   H A N D   A N A L Y S E R ***")
         print("*** USING TEST DECK ***")  
         file = sys.argv[1]
         read_deck_from_file(file)
@@ -106,7 +114,6 @@ if __name__ == "__main__":
     # Calculating and storing ranks for each player's hand
     print("Here are the six hands... ")
     for new_player in players:
-        print(new_player.get_name() + " 's Hand:")
         new_player.get_hand().print_hand()
         hand_ranks = new_player.get_hand().rank_hand()
         flush_suit = new_player.get_hand().get_flush_suit()
@@ -117,10 +124,10 @@ if __name__ == "__main__":
     player_ranks.sort(key=lambda pr: (-Cards.get_rank_value(pr.get_rank()), compare_suits(pr.get_suit(), pr.get_suit())))
 
     # Printing out each hand and rank in order
-    print("//////////////////////////Winning Hand Order//////////////////////////////////////////////////////")
+    print("--- WINNING HAND ORDER ---")
     for new_player_rank in player_ranks:
-        print(new_player_rank.get_player().get_name() + " 's Hand:")
         new_player_rank.get_player().get_hand().sort_hand()
+        new_player.get_hand().print_hand()
         print(" - " + new_player_rank.get_rank())
         print()
 

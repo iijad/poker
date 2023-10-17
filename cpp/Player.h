@@ -2,7 +2,11 @@
 #define PLAYER_H
 #include "Hand.h"
 #include "Cards.h"
+/* 
+  This is the specification file for the Player class. It has all the methods needed for a Player in the game and will
+  be defined in the Player.cpp file
 
+*/
 
 #include <string>
 

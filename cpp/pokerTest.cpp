@@ -11,6 +11,12 @@
 
 using namespace std;
 
+/*  
+    This class creates the 6 players for the poker game, prints each hand, ranks each hand, 
+    and then prints the ranked hands 
+
+*/
+
 //method for reading the cards from the file and printing them out
 vector<Cards> readDeckFromFile(const string& filePath) {
     vector<Hand> hands;
@@ -50,9 +56,11 @@ vector<Cards> readDeckFromFile(const string& filePath) {
 }
 
 
+//THE MAIN CLASS//////
 int main(int argc, char *argv[]) {
     Deck deck;
     deck.shuffle();
+    //Creating the command line argument for either a random deck or the deck specifed in the file
     if (argc == 1) {
         cout << "*** P O K E R   H A N D   A N A L Y S E R ***" <<endl;
         cout << "*** USING RANDOMIZED DECK OF CARDS ***" << endl;
@@ -114,7 +122,6 @@ int main(int argc, char *argv[]) {
         newPlayerRank.getPlayer().getHand()/*.sortHand()*/;
         newPlayerRank.getPlayer().getHand().printHand();
          cout << " - " << newPlayerRank.getRank() <<  endl;
-        //  cout << " FS " << newPlayerRank.getSuit() <<  endl;
          cout <<  endl;
     }
     

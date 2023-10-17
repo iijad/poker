@@ -37,26 +37,27 @@ class Deck:
         for suit in suits:
             for rank in ranks:
                 self.cards.append(Cards(rank, suit))
-
+# suffling the deck
     def shuffle(self):
         shuffle(self.cards)
-
+# dealing each card from the deck
     def deal_card(self):
         if self.cards:
             return self.cards.pop(0)
         return None
-
+# returning the size of the deck
     def size(self):
         return len(self.cards)
-
+# printing the deck
     def print_deck(self):
         count = 0
+        line = []
         for card in self.cards:
             print(card, "\t")
             count += 1
             if count % 13 == 0:
                 print()
-
+# after getting the hands, printing what is remianing of the deck
     def print_remaining_deck(self):
         print("\nRemaining Cards in Deck:\t", "")
         for card in self.cards:
@@ -68,19 +69,19 @@ class Deck:
 class Hand:
     def __init__(self):
         self.cards = []
-
+# adding a card to each hand
     def add_card(self, card):
         self.cards.append(card)
-
+# getting the cards for each hand
     def get_cards(self):
         return self.cards
-
+# sorting the hand in order of suit
     def sort_hand(self):
         self.cards.sort(key=lambda card: card.get_suit())
 
     def __lt__(self, other):
         return self.rank_hand() < other.rank_hand()
-
+# printing each hand
     def print_hand(self):
         count = 0
         for card in self.cards:
@@ -98,7 +99,7 @@ class Hand:
             if count % 5 == 0:
                 hand_string += "\n"
         return hand_string
-
+# getting the ranks according to the rules of 5 card stud
     def rank_hand(self):
         suit_counts = {}
         rank_counts = {}
@@ -179,16 +180,16 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.hand = Hand()
-
+# adding a card to each player
     def add_to_hand(self, card):
         self.hand.add_card(card)
-
+# getting the name of each player
     def get_name(self):
         return self.name
-
+# getting the hand
     def get_hand(self):
         return self.hand
-
+# returning the name
     def __str__(self):
         return self.name
 
@@ -199,13 +200,13 @@ class PlayerRank:
         self.player = player
         self.rank = rank
         self.suit = suit
-
+# returning the player
     def get_player(self):
         return self.player
-
+# getting the rank
     def get_rank(self):
         return self.rank
-
+# comparing each rank
     def __lt__(self, other):
         return self.rank < other.rank
 
