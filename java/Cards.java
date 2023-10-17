@@ -133,7 +133,7 @@ import java.util.Comparator;
  //printing what is remaining in the deck
  public void printRemainingDeck(){
    System.out.println();
-   System.out.println("Remaining Cards in Deck: " + "\t"); 
+   System.out.println("*** Here is what remains in the deck...: " + "\t"); 
    for (Cards card: cards) {
      System.out.print(card.toString() + "\t");
      }
@@ -165,7 +165,7 @@ import java.util.Comparator;
      return cards;
      
    }
- 
+     //sorting each hand
     public void sortHand() {
         Collections.sort(cards, new Comparator<Cards>() {
         
@@ -195,7 +195,7 @@ import java.util.Comparator;
        }
    }
                
-   
+   //making a toString method to correctly format the hands
    @Override 
    public String toString() {
    // StringBuilder allows to store each card to make a hand and return it
@@ -215,7 +215,7 @@ import java.util.Comparator;
  
    ////the method to rank the hands according to the rules of 5 card stud
    public String rankHand() {
-     //Creating a hash map to rank them hands
+     //Creating a hash map to rank the hands
      Map<Character, Integer> suitCounts = new HashMap<>(); //for the suits
      Map<String, Integer> rankCounts = new HashMap<>();  //for the ranks
      this.handRank = "Royal Straight Flush";
@@ -276,7 +276,7 @@ import java.util.Comparator;
      return "High Card"; //the highest card
      
      
-     String rank = rankHand();
+       String rank = rankHand();
      
      if (rank.equals("Royal Straight Flush") || rank.equals("Straight Flush") || rank.equals("Flush")) {
          List<Cards> sortedCards = SCBR(cards);

@@ -20,11 +20,15 @@ public class PokergameTest {
    deck.shuffle();
    
    if (args.length == 0) { //if there is no argument, go to the main program
+     System.out.println("*** P O K E R   H A N D   A N A L Y Z E R ***");
+     System.out.println();
      System.out.println("*** USING RANDOMIZED DECK OF CARDS ***");
      System.out.println();
      System.out.println();
      System.out.println("*** Shuffled 52 card deck: "); 
    } else {//for the file
+       System.out.println("*** P O K E R   H A N D   A N A L Y Z E R ***");
+       System.out.println();
        System.out.println("*** USING TEST DECK ***");
        String file = args[0];
        readDeckFromFile(file);
@@ -69,13 +73,9 @@ public class PokergameTest {
    //Calculating and storing ranks for each players hand
    System.out.println("Here are the six hands... ");
    for (Player newPlayer : players) {
-       System.out.println(newPlayer.getName() + " 's Hand:");
        newPlayer.getHand().printHand();
        String handRanks = newPlayer.getHand().rankHand();
        char flushSuit = newPlayer.getHand().getFlushSuit();
-       //char tieSuit = newPlayer.getHand().getSuit();
-       //System.out.println(" - " + handRanks);
-       //System.out.println( "FS " + flushSuit);
        System.out.println();
        playerRanks.add(new PlayerRank(newPlayer, handRanks, flushSuit));
    }
@@ -120,22 +120,22 @@ public class PokergameTest {
        return rankCompare;
    }); 
    
-   
-   
+
+   deck.printRemainingDeck();
+   System.out.println();
+   System.out.println();
    //printing out each hand and rank in order
-   System.out.println("//////////////////////////Winning Hand Order//////////////////////////////////////////////////////");
+   System.out.println("--- WINNING HAND ORDER ---");
    for (PlayerRank newPlayerRank : playerRanks) {
-       System.out.println(newPlayerRank.getPlayer().getName() + " 's Hand:");
        newPlayerRank.getPlayer().getHand().sortHand();
        newPlayerRank.getPlayer().getHand().printHand();
        System.out.println(" - " + newPlayerRank.getRank());
-       //System.out.println( " FS " + newPlayerRank.getSuit());
        System.out.println();
    }
   
        
    
-    deck.printRemainingDeck();
+    
     
     
         
@@ -201,10 +201,11 @@ public class PokergameTest {
         if (allHands.size() < 5) {
             System.out.println("Not enough cards to make a hand.");
         } else {
-            System.out.println("Here are the six hands...");
+            System.out.println();
+            System.out.println("*** Here are the six hands...");
             for (int i = 0; i < 6; i++) {
                 List<Cards> hand = allHands.get(i);
-                System.out.println("Hand " + (i + 1) + ":");
+                
                 for (Cards card : hand) {
                     System.out.print(card + "\t");
                 }
