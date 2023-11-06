@@ -39,7 +39,7 @@ for my $player (@players) {
 for my $player (@players) {
     my $playerName = $player->getName();
     my $playerHand = $player->getHand();
-    #print "$playerName's Hand:";
+    print "$playerName's Hand:";
     $playerHand->printHand();
     print "\n";
 }
