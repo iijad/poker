@@ -14,7 +14,7 @@ if (@ARGV == 1) {
     if (!-e $file_path) {
         die "File not found: $file_path\n";
     }
-
+    print "***USING TEST DECK***\n";
     # Read the file and create cards
     my %card_seen;
     my @cards;
@@ -107,7 +107,7 @@ for my $player (@players) {
 for my $player (@players) {
     my $playerName = $player->getName();
     my $playerHand = $player->getHand();
-    print "$playerName's Hand:";
+    print "$playerName Hand:";
     $playerHand->printHand();
     print "\n";
 }
