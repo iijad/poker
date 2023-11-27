@@ -16,7 +16,7 @@
                                (defvar line 0)
                                ;;; Now start reading each line 
                                (loop for i from 0 to 5 do
-                                     ( setf line ( read-line stream))
+                                       ( setf line ( read-line stream))
                                      ;;; Print out the contents of the file
                                      ( princ line ) (terpri)
 				     ( loop for j from 0 to 4 do
