@@ -19,11 +19,11 @@ cargo run pokerTest /home/ijaduola_io/poker/handsets/pair
 Commands for the lisp project
 sbcl --script pokerTest.lisp /pub/pounds/CSC330/poker/testhands
 sbcl --script pokerTest.lisp /pub/pounds/CSC330/poker/testhands /home/ijaduola_io/poker/handsets/handsets,
-..pokerTest.lisp //home/ijaduola_io/poker/handsets/pair
+
 
 Commands for the go project
 go run pokerTest.go,
-go tun pokerTest.go /home/ijaduola_io/poker/handsets/handsets,
+go run pokerTest.go /home/ijaduola_io/poker/handsets/handsets,
 go run pokerTest.go /home/ijaduola_io/poker/handsets/pair
 
 
