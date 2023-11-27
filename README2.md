@@ -5,22 +5,26 @@ perl pokerTest.pl,
 perl pokerTest.pl /home/ijaduola_io/poker/handsets/handsets, 
 perl pokerTest.pl /home/ijaduola_io/poker/handsets/pair
 
-Commands for the julia  project
+Commands for the julia project
 julia pokerTest.jl,
 julia pokerTest.jl /home/ijaduola_io/poker/handsets/handsets,
 julia pokerTest.jl /home/ijaduola_io/poker/handsets/pair
 
 
 Commands for the rust project
-rust 
+cargo run pokerTest,
+cargo run pokerTest /home/ijaduola_io/poker/handsets/handsets,
+cargo run pokerTest /home/ijaduola_io/poker/handsets/pair
 
 Commands for the lisp project
-
+sbcl --script pokerTest.lisp /pub/pounds/CSC330/poker/testhands
+sbcl --script pokerTest.lisp /pub/pounds/CSC330/poker/testhands /home/ijaduola_io/poker/handsets/handsets,
+..pokerTest.lisp //home/ijaduola_io/poker/handsets/pair
 
 Commands for the go project
-c++ pokerTest.cpp
-a.out /home/ijaduola_io/poker/handsets/handsets
-a.out /home/ijaduola_io/poker/handsets/pair
+go run pokerTest.go,
+go tun pokerTest.go /home/ijaduola_io/poker/handsets/handsets,
+go run pokerTest.go /home/ijaduola_io/poker/handsets/pair
 
 
 
