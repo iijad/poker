@@ -115,13 +115,13 @@ sub rankHand {
         }
         
         if ($suitCount{$suit} == 5) {
-            $is_flush = 1;
+            $isFlush = 1;
         }
     }
     
     my @rankValues = sort { $a->getRankValue() <=> $b->getRankValue() } @cards;
     
-    for my $i (0 .. $#rank_values - 1) {
+    for my $i (0 .. $#rankValues - 1) {
         if ($rankValues[$i + 1]->getRankValue() - $rankValues[$i]->getRankValue() != 1) {
             $isStraight = 0;
             last;
